@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoSH Training & Compliance</title>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-blue: #2563eb;
+            --primary-dark-blue: #1e40af;
+            --primary-light-blue: #dbeafe;
+            --gray-900: #1f2937;
+            --gray-800: #374151;
+            --gray-700: #4b5563;
+            --gray-600: #6b7280;
+            --gray-500: #9ca3af;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gray-100);
+            line-height: 1.5;
+            color: var(--gray-800);
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .section-padding {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-padding {
+                padding-top: 6rem;
+                padding-bottom: 6rem;
+            }
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Hero section gradient */
+        .hero-bg-gradient {
+            background-image: linear-gradient(to right top, #2b6cb0, #25619d, #1e558b, #184979, #123e68);
+        }
+
+        .text-gradient {
+            background-image: linear-gradient(45deg, #1a73e8, #3553a3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark-blue);
+            transform: scale(1.05);
+        }
+
+        /* Card Hover Effect */
+        .card-hover-scale {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover-scale:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Header & Navigation */
+        .header {
+            background-color: var(--white);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+        .nav-logo span {
+            color: var(--gray-800);
+        }
+        .nav-link {
+            color: var(--gray-600);
+            font-weight: 500;
+            transition: color 0.3s ease-in-out;
+        }
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+
+        .desktop-nav {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+                gap: 1.5rem;
+                align-items: center;
+            }
+            .desktop-nav a {
+                padding: 0;
+            }
+        }
+        
+        .mobile-menu-btn {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            color: var(--gray-800);
+        }
+        @media (min-width: 768px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+            background-color: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding-bottom: 1rem;
+        }
+        .mobile-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+        .mobile-menu a:hover {
+            background-color: var(--gray-100);
+        }
+        .mobile-menu .btn-primary {
+            display: block;
+            margin: 1rem;
+            text-align: center;
+        }
+        .mobile-menu.open {
+            display: block;
+        }
+
+
+        /* Hero Section */
+        .hero {
+            color: var(--white);
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        @media (min-width: 768px) {
+            .hero {
+                padding-top: 8rem;
+                padding-bottom: 8rem;
+            }
+        }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .hero-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .hero-text {
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .hero-text {
+                text-align: left;
+            }
+        }
+        .hero h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.025em;
+        }
+        @media (min-width: 640px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .hero h1 {
+                font-size: 3.75rem;
+            }
+        }
+        .hero p {
+            margin-top: 1.5rem;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        @media (min-width: 1024px) {
+            .hero p {
+                font-size: 1.5rem;
+            }
+        }
+        .hero .btn-primary {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            padding: 0.75rem 2rem;
+        }
+        .hero-image {
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .hero-image {
+                display: flex;
+            }
+        }
+        .hero-image img {
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Why PoSH Section */
+        .info-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        @media (min-width: 768px) {
+            .info-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .info-card {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gray-200);
+        }
+
+        /* Training Cards Section */
+        .training-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .training-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .training-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .training-card {
+            background-color: var(--white);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .training-card h3 {
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        a {
+            text-decoration: none !important;
+        }
+        .training-card .icon {
+            height: 4rem;
+            width: 4rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+        .training-card p {
+            margin-top: 1rem;
+            font-size: 1.125rem;
+            color: var(--gray-600);
+        }
+        .training-card .btn-primary {
+            margin-top: 2rem;
+        }
+
+        /* Blogs Section */
+        .blog-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        @media (min-width: 768px) {
+            .blog-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .blog-cards {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .blog-card {
+            background-color: var(--white);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card img {
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+        }
+        .blog-card-content {
+            padding: 1.5rem;
+            text-align: left;
+            flex-grow: 1;
+        }
+        .blog-card-content h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        .blog-card-content p {
+            color: var(--gray-500);
+            margin-top: 0.5rem;
+        }
+        .blog-card-link {
+            padding: 1.5rem;
+            padding-top: 0;
+            text-align: left;
+        }
+        .blog-card-link a {
+            color: var(--primary-blue);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .blog-card-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* FAQ Section */
+        .faq-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item details {
+            background-color: var(--gray-100);
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+        }
+        .faq-item summary {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            cursor: pointer;
+            list-style: none; /* Hide default arrow */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-item details[open] summary::after {
+            content: '-';
+            transform: rotate(180deg);
+        }
+        .faq-item p {
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+            color: var(--gray-600);
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        /* Contact Section */
+        .contact-form-wrapper {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .contact-form-wrapper {
+                padding: 3rem;
+            }
+        }
+        .contact-form {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--gray-300);
+            transition: all 0.3s ease-in-out;
+        }
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.5);
+        }
+        .form-textarea {
+            min-height: 120px;
+        }
+        .contact-form button {
+            width: 100%;
+        }
+        .free a {
+            background-color: #ffffff;
+            color: #000;
+            width: 250px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none !important;
+        }
+        h1 {
+            margin-bottom: 0px;
+            line-height: 70px !important;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--gray-900);
+            color: var(--white);
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <nav class="container nav">
+            <a href="#" class="nav-logo">PoSH<span class="nav-logo-text">Training</span></a>
+
+            <!-- Desktop Navigation -->
+            <div class="desktop-nav">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about-posh" class="nav-link">About PoSH</a>
+                <a href="#training" class="nav-link">Courage</a>
+                <a href="#blogs" class="nav-link">Blogs</a>
+                <a href="#contact" class="nav-link">Contact Us</a>
+                <!-- <a href="#contact" class="btn-primary">Get a Free Consultation</a> -->
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 1.5rem; width: 1.5rem;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about-posh" class="nav-link">About PoSH</a>
+            <a href="#training" class="nav-link">Courage</a>
+            <a href="#blogs" class="nav-link">Blogs</a>
+            <a href="#contact" class="nav-link">Contact Us</a>
+            <!-- <a href="#contact" class="btn-primary">Get a Free Consultation</a> -->
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero hero-bg-gradient" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>
+                    A Safe Workplace Isn’t Optional-It’s the Law.
+                </h1>
+                <p>
+                    Build a Safer Workplace. Stay 100% PoSH Compliant.
+                </p>
+                <div class="free">
+                <a href="#contact" class="">Get a Free Consultation</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/500x350/ffffff/333333?text=Compliance+Illustration" alt="PoSH Compliance Illustration" class="illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- Protect your people section -->
+    <section class="section-padding" id="why-posh">
+        <div class="container text-center" style="max-width: 64rem;">
+            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800);">Protect your people. Protect your brand.</h2>
+            <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--gray-600);">Every employee deserves to feel safe, respected, and valued. Every organization in India with 10+ employees is legally required to conduct PoSH training under the Sexual Harassment of Women at Workplace Act, 2013. Yet, 70% of companies fail to comply fully — exposing themselves to legal penalties, employee distrust, and reputational damage.</p>
+            <div class="info-cards">
+                <div class="info-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🚫</div>
+                    <p style="font-weight: 600; color: var(--gray-800);">7 in 10 organizations miss critical compliance steps.</p>
+                </div>
+                <div class="info-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                    <p style="font-weight: 600; color: var(--gray-800);">Non-compliance = penalties, loss of trust, and reputational damage.</p>
+                </div>
+                <div class="info-card">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <p style="font-weight: 600; color: var(--gray-800);">Proactive compliance builds safer, stronger, more productive teams.</p>
+                </div>
+            </div>
+            <p style="margin-top: 3rem; font-size: 1.25rem; font-weight: 700; color: var(--gray-700);">Ensure PoSH compliance to Protect your workplace.</p>
+        </div>
+    </section>
+
+    <!-- About PoSH Section -->
+    <section class="section-padding" style="background-color: var(--white);" id="about-posh">
+        <div class="container text-center" style="max-width: 64rem;">
+            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800);">About PoSH</h2>
+            <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--gray-600);">The Prevention of Sexual Harassment (PoSH) Act, 2013 is a landmark Indian law that mandates every employer to create a safe, respectful, and harassment-free workplace for women.</p>
+            <h3 style="margin-top: 3rem; font-size: 1.875rem; font-weight: 700; color: var(--gray-800);">Why It Matters to You:</h3>
+            <div class="info-cards">
+                <div class="info-card" style="border-top: 4px solid var(--primary-blue); background-color: var(--gray-100);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                    <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-800);">Legal Protection</h4>
+                    <p style="margin-top: 0.5rem; color: var(--gray-600);">Non-compliance can lead to fines of up to ₹50,000 per instance.</p>
+                </div>
+                <div class="info-card" style="border-top: 4px solid var(--primary-blue); background-color: var(--gray-100);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🤝</div>
+                    <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-800);">Trust & Inclusion</h4>
+                    <p style="margin-top: 0.5rem; color: var(--gray-600);">Employees thrive in a culture of respect and fairness.</p>
+                </div>
+                <div class="info-card" style="border-top: 4px solid var(--primary-blue); background-color: var(--gray-100);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
+                    <h4 style="font-size: 1.25rem; font-weight: 700; color: var(--gray-800);">Better Productivity</h4>
+                    <p style="margin-top: 0.5rem; color: var(--gray-600);">Safe workplaces reduce attrition and boost engagement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Programs Section -->
+    <section class="section-padding" style="background-color: var(--gray-100);" id="training">
+        <div class="container text-center" style="max-width: 80rem;">
+            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800);">Our Training Approach</h2>
+            <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--gray-600);">Don’t wait for a complaint to act — build safety into your culture today!</p>
+            <div class="training-cards">
+                <!-- Comprehensive Training Card -->
+                <div class="training-card card-hover-scale">
+                    <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944c-.696 0-1.378.077-2.046.228M4.618 7.984A11.955 11.955 0 0112 21.056c.696 0 1.378-.077 2.046-.228m3.522-13.018a1.5 1.5 0 11-3.033 0 1.5 1.5 0 013.033 0zM12 2.25a.75.75 0 00-.75.75v12a.75.75 0 001.5 0V3a.75.75 0 00-.75-.75zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <h3>Comprehensive 60-Minute Training</h3>
+                    <p>All essentials of the PoSH Act explained, from complaint process to IC responsibilities.</p>
+                    <a href="#" class="btn-primary">Enrol Now</a>
+                </div>
+                <!-- Annual Refresher Card -->
+                <div class="training-card card-hover-scale">
+                    <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11.166 5A8.001 8.001 0 0112 21a8.001 8.001 0 01-5.582-13m0 0L4.5 14" />
+                    </svg>
+                    <h3>30-Minute Annual Refresher</h3>
+                    <p>Keeps teams up to date and meets annual compliance requirements.</p>
+                    <a href="#" class="btn-primary">Book Refresher</a>
+                </div>
+                <!-- Awareness Capsule Card -->
+                <div class="training-card card-hover-scale">
+                    <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <h3>10-Minute Awareness Capsule (Free)</h3>
+                    <p>Bite-sized awareness for interns, contract staff, and quick onboarding.</p>
+                    <a href="#" class="btn-primary">Get Free Access</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section class="section-padding" style="background-color: var(--gray-100);" id="blogs">
+        <div class="container text-center">
+            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800);">Expert Insights: Our Blog</h2>
+            <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--gray-600);">Position your organization as a thought leader in compliance and workplace culture.</p>
+            <div class="blog-cards">
+                <!-- Blog Post 1 -->
+                <div class="blog-card card-hover-scale">
+                    <img src="https://placehold.co/600x400/1a73e8/ffffff?text=Legal+Compliance" alt="Illustration for legal compliance">
+                    <div class="blog-card-content">
+                        <h4>5 Reasons Your Company Needs PoSH Training Now</h4>
+                        <p>Discover the key benefits of proactive PoSH compliance and how it builds a stronger workplace.</p>
+                    </div>
+                    <div class="blog-card-link">
+                        <a href="#">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 1rem; width: 1rem;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="blog-card card-hover-scale">
+                    <img src="https://placehold.co/600x400/1a73e8/ffffff?text=Internal+Committee" alt="Illustration of an internal committee meeting">
+                    <div class="blog-card-content">
+                        <h4>Navigating the IC: A Guide for Internal Committee Members</h4>
+                        <p>Practical tips and best practices for IC members to handle complaints with sensitivity and fairness.</p>
+                    </div>
+                    <div class="blog-card-link">
+                        <a href="#">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 1rem; width: 1rem;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="blog-card card-hover-scale">
+                    <img src="https://placehold.co/600x400/1a73e8/ffffff?text=Workplace+Safety" alt="Illustration of workplace safety">
+                    <div class="blog-card-content">
+                        <h4>The Power of Awareness: Why PoSH Training Matters for All Employees</h4>
+                        <p>Highlighting why a harassment-free workplace is a collective responsibility for everyone in the organization.</p>
+                    </div>
+                    <div class="blog-card-link">
+                        <a href="#">
+                            Read More
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="height: 1rem; width: 1rem;">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section-padding" style="background-color: var(--white);" id="faq">
+        <div class="container" style="max-width: 64rem;">
+            <h2 class="text-center" style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800); margin-bottom: 3rem;">Frequently Asked Questions</h2>
+            <div class="faq-accordion">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <details>
+                        <summary>Q. Who needs PoSH training?</summary>
+                        <p>All employees, managers, and Internal Committee (IC) members in organizations with 10+ employees.</p>
+                    </details>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <details>
+                        <summary>Q. What happens if a company doesn’t comply?</summary>
+                        <p>Non-compliance can lead to penalties up to ₹50,000, reputational damage, and in severe cases, cancellation of business licenses.</p>
+                    </details>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <details>
+                        <summary>Q. Do men also need PoSH training?</summary>
+                        <p>Yes. The law mandates all employees — men, women, interns, and contractors — must be trained.</p>
+                    </details>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <details>
+                        <summary>Q. Will completing the course make our organization compliant?</summary>
+                        <p>Training + Internal Committee setup + annual reporting = full compliance. We help you at every step.</p>
+                    </details>
+                </div>
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <details>
+                        <summary>Q. Can you customize training for our industry?</summary>
+                        <p>Absolutely. We adapt content with sector-specific case studies so it resonates with your teams.</p>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section class="section-padding" style="background-color: var(--primary-blue);" id="contact">
+        <div class="container" style="max-width: 64rem;">
+            <div class="contact-form-wrapper">
+                <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--gray-800);">Get a Free Consultation</h2>
+                <p style="margin-top: 1rem; font-size: 1.125rem; color: var(--gray-600); max-width: 48rem; margin-left: auto; margin-right: auto;">Fill out the form below to connect with our PoSH experts and find the best solution for your organization.</p>
+                <form class="contact-form">
+                    <div class="form-grid">
+                        <input type="text" placeholder="Full Name" class="form-input" />
+                        <input type="text" placeholder="Company Name" class="form-input" />
+                        <input type="email" placeholder="Email Address" class="form-input" />
+                        <input type="tel" placeholder="Phone Number" class="form-input" />
+                    </div>
+                    <div>
+                        <textarea placeholder="Your Message" rows="5" class="form-textarea"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="padding: 1rem 2rem;">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 PoSH Training. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript to toggle the mobile menu -->
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            var menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
